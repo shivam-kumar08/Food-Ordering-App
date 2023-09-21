@@ -1,0 +1,93 @@
+#You have to design a Food Ordering app for a restaurant
+The application will have a log-in for admin and users to log-in
+
+class FoodItem:
+    def __init__(self, food_id, name, quantity, price, discount, stock):
+        self.food_id = food_id
+        self.name = name
+        self.quantity = quantity
+        self.price = price
+        self.discount = discount
+        self.stock = stock
+
+class Restaurant:
+    def __init__(self):
+        self.food_items = []
+
+    def add_food_item(self, name, quantity, price, discount, stock):
+        food_id = len(self.food_items) + 1
+        food_item = FoodItem(food_id, name, quantity, price, discount, stock)
+        self.food_items.append(food_item)
+        print(f"Food item '{name}' added with FoodID: {food_id}")
+
+    def edit_food_item(self, food_id, name, quantity, price, discount, stock):
+        for item in self.food_items:
+            if item.food_id == food_id:
+                item.name = name
+                item.quantity = quantity
+                item.price = price
+                item.discount = discount
+                item.stock = stock
+                print(f"Food item with FoodID {food_id} updated.")
+                return
+        print(f"Food item with FoodID {food_id} not found.")
+
+    def view_food_items(self):
+        if not self.food_items:
+            print("No food items available.")
+        else:
+            print("Food items:")
+            for item in self.food_items:
+                print(f"FoodID: {item.food_id}, Name: {item.name}, Quantity: {item.quantity}, "
+                      f"Price: {item.price}, Discount: {item.discount}, Stock: {item.stock}")
+
+    def remove_food_item(self, food_id):
+        for item in self.food_items:
+            if item.food_id == food_id:
+                self.food_items.remove(item)
+                print(f"Food item with FoodID {food_id} removed.")
+                return
+        print(f"Food item with FoodID {food_id} not found.")
+
+
+def main():
+    restaurant = Restaurant()
+
+    while True:
+        print("\nAdmin Menu:")
+        print("1. Add Food Item")
+        print("2. Edit Food Item")
+        print("3. View Food Items")
+        print("4. Remove Food Item")
+        print("5. Exit")
+
+        choice = input("Enter your choice: ")
+
+        if choice == "1":
+            name = input("Enter name: ")
+            quantity = input("Enter quantity: ")
+            price = float(input("Enter price: "))
+            discount = float(input("Enter discount: "))
+            stock = int(input("Enter stock: "))
+            restaurant.add_food_item(name, quantity, price, discount, stock)
+        elif choice == "2":
+            food_id = int(input("Enter FoodID to edit: "))
+            name = input("Enter new name: ")
+            quantity = input("Enter new quantity: ")
+            price = float(input("Enter new price: "))
+            discount = float(input("Enter new discount: "))
+            stock = int(input("Enter new stock: "))
+            restaurant.edit_food_item(food_id, name, quantity, price, discount, stock)
+        elif choice == "3":
+            restaurant.view_food_items()
+        elif choice == "4":
+            food_id = int(input("Enter FoodID to remove: "))
+            restaurant.remove_food_item(food_id)
+        elif choice == "5":
+            break
+        else:
+            print("Invalid choice. Please try again.")
+
+
+if __name__ == "__main__":
+    main()
